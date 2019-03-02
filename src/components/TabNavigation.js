@@ -6,7 +6,7 @@ class TabNavigation extends Component {
     return (
       <nav>
         <Link to="/feedings">Feedings</Link>
-        <Link to="/food">Food</Link>
+        <Link to="/foods">Food</Link>
       </nav>
     )
   }

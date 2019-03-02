@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 
 import Chart from "./components/Chart"
@@ -17,7 +17,7 @@ class App extends Component {
           <TabNavigation />
           <Route exact path="/" component={Feedings} />
           <Route path="/feedings" component={Feedings} />
-          <Route path="/food" component={Foods} />
+          <Route path="/foods" component={Foods} />
         </div>
       </Router>
     );
