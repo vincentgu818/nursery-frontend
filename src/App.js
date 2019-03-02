@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+
+import Chart from "./components/Chart"
+import TabNavigation from "./components/TabNavigation"
+import Feedings from "./components/feedings/Feedings"
+import Foods from "./components/foods/Foods"
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div>
+          <h1>Nursery</h1>
+          <Chart />
+          <TabNavigation />
+          <Route exact path="/" component={Feedings} />
+          <Route path="/feedings" component={Feedings} />
+          <Route path="/foods" component={Foods} />
+        </div>
+      </Router>
     );
   }
 }
