@@ -7,7 +7,7 @@ class Feedings extends Component {
     return (
       <div>
         Feedings
-        <FeedingsTable />
+        <FeedingsTable feedings={this.props.feedings} />
       </div>
     )
   }
