@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 
 
-import Chart from "./components/Chart"
-import TabNavigation from "./components/TabNavigation"
-import Feedings from "./components/feedings/Feedings"
-import Foods from "./components/foods/Foods"
+import Chart from "./components/chart/Chart";
+import TabNavigation from "./components/TabNavigation";
+import Feedings from "./components/feedings/Feedings";
+import Foods from "./components/foods/Foods";
 
 class App extends Component {
   constructor(props) {
@@ -17,12 +17,12 @@ class App extends Component {
   }
   fetchFeedings = async () => {
     const feedings = await axios.get('http://localhost:3000/feedings');
+    console.log(feedings);
     const feedingsWithDuration = feedings.data.map(feeding => {
       const duration = Date.parse(feeding.end_time) - Date.parse(feeding.start_time)
-      const durationSeconds = duration / 1000;
       return {
         ...feeding,
-        duration: durationSeconds
+        duration: duration
       }
     })
     this.setState({ feedings: feedingsWithDuration })
