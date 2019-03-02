@@ -11,10 +11,10 @@ class Chart extends Component {
   render() {
     return (
       <div>
-      <LineChart width={600} height={300} data={data}>
-        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+      <LineChart width={600} height={300} data={this.props.feedings}>
+        <Line type="monotone" dataKey="duration" stroke="#8884d8" />
         <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="start_time" />
         <YAxis />
       </LineChart>
       </div>
