@@ -7,7 +7,12 @@ class Feedings extends Component {
     return (
       <div>
         Feedings
-        <FeedingsTable feedings={this.props.feedings} />
+        <FeedingsTable
+          feedings={this.props.feedings}
+          showEditForm={this.props.showEditForm}
+          deleteFeeding={this.props.deleteFeeding}
+        />
+        {this.props.renderEditForm()}
       </div>
     )
   }

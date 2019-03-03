@@ -20,6 +20,20 @@ class FeedingsTable extends Component {
           <td>{this.formatDuration(feeding.duration)}</td>
           <td>{feeding.side}</td>
           <td>{feeding.foods.join(', ')}</td>
+          <td>
+            <button
+              onClick={() => this.props.deleteFeeding(feeding.id)}
+            >
+              Delete
+            </button>
+          </td>
+          <td>
+            <button
+              onClick={() => this.props.showEditForm(feeding)}
+            >
+              Edit
+            </button>
+          </td>
         </tr>
       )
     })
