@@ -2,7 +2,9 @@ import React, { Component } from "react";
 
 class FoodsEdit extends Component {
   handleSubmit= (event) => {
+    // prevent form from refreshing page
     event.preventDefault();
+    // call editFood function
     this.props.editFood()
   }
   render() {

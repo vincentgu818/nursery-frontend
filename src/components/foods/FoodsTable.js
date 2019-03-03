@@ -3,6 +3,7 @@ import moment from "moment";
 
 class FoodsTable extends Component {
   renderRows = () => {
+    // map through array of food objects and return <tr> for each
     return this.props.foods.map(food => {
       return (
         <tr key={food.id}>

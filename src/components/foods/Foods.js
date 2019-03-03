@@ -26,10 +26,13 @@ class Foods extends Component {
     }
   }
   fetchFoods = async () => {
+    // make request to get all foods in db
     const foods = await axios.get('http://localhost:3000/foods');
+    // set state foods array to array of foods returned from fetch
     this.setState({ foods: foods.data })
   }
   setCurrentDateTime = () => {
+    // set date and time fields in create form to equal current date and time
     this.setState({
       ...this.state,
       createFormData: {
@@ -40,6 +43,7 @@ class Foods extends Component {
     })
   }
   handleChange = (event, form) => {
+    // change form input values in state
     this.setState({
       ...this.state,
       [form]: {
@@ -49,11 +53,13 @@ class Foods extends Component {
     })
   }
   createFood = async () => {
+    // make request to save new food to database
     const newFood = await axios.post("http://localhost:3000/foods", {
       time: `${this.state.createFormData.date} ${this.state.createFormData.time}`,
       food: this.state.createFormData.food
     })
 
+    // clear create form inputs
     this.setState(prevState => {
       return {
         ...prevState,
@@ -67,20 +73,27 @@ class Foods extends Component {
     })
   }
   deleteFood = async (id) => {
+    // make request to delete food item from db
     await axios.delete(`http://localhost:3000/foods/${id}`)
+    // re-fetch all foods from db
     this.fetchFoods()
   }
   editFood = async () => {
+    // make request to update food item
     await axios.put(`http://localhost:3000/foods/${this.state.editId}`, {
       time: `${this.state.editFormData.date} ${this.state.editFormData.time}`,
       food: this.state.editFormData.food
     })
 
+    // clear and hide edit form
     this.hideEditForm()
 
+    // re-fetch all foods from db
     this.fetchFoods()
   }
   showEditForm = (food) => {
+    // add values for edit form inputs
+    // set showEditForm to true
     this.setState({
       ...this.state,
       editFormData: {
@@ -93,6 +106,8 @@ class Foods extends Component {
     })
   }
   hideEditForm = () => {
+    // clear edit form input values
+    // set showEditForm to false
     this.setState({
       ...this.state,
       editFormData: {
@@ -105,7 +120,9 @@ class Foods extends Component {
     })
   }
   renderEditForm = () => {
+    // if this.state.showEditForm is true
     if (this.state.showEditForm) {
+      // render edit form
       return (
         <FoodsEdit
           editFormData={this.state.editFormData}
@@ -117,6 +134,7 @@ class Foods extends Component {
     }
   }
   componentDidMount() {
+    // fetch all foods when component first renders
     this.fetchFoods()
   }
   render() {
