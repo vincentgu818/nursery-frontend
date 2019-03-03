@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import moment from "moment";
 
 class FeedingsTable extends Component {
-  formatDuration(milliseconds) {
+  formatDuration = (milliseconds) => {
     if (milliseconds > 3600000) {
+      // if feeding lasted longer than one hour
+      // format duration with hours, minutes, and seconds
       return moment(moment.duration(milliseconds)._data).format("h[h]m[m]s[s]");
     } else if (milliseconds > 60000) {
+      // if feeding lasted longer than one minute
+      // format duration with just minutes and seconds
       return moment(moment.duration(milliseconds)._data).format("m[m]s[s]");
     } else {
+      // format duration with just seconds
       return moment(moment.duration(milliseconds)._data).format("s[s]");
     }
   }
