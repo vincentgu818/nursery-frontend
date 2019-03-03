@@ -15,6 +15,7 @@ class App extends Component {
     super(props);
     this.state = {
       feedings: [],
+      timeSpan: 168,
       createFormData: {
         start_date: "",
         start_time: "",
@@ -34,8 +35,13 @@ class App extends Component {
     }
   }
   fetchFeedings = async () => {
-    const feedings = await axios.get('http://localhost:3000/feedings');
+    const feedings = await axios.get(`http://localhost:3000/feedings/last_hours/${this.state.timeSpan}`);
     this.setState({ feedings: feedings.data })
+  }
+  changeTimeSpan = (event) => {
+    this.setState({ timeSpan: event.target.value }, () => {
+      this.fetchFeedings()
+    })
   }
   handleChange = (event, form) => {
     this.setState({
@@ -117,6 +123,7 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
+                            changeTimeSpan={this.changeTimeSpan}
                           />}
           />
           <Route
@@ -126,6 +133,7 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
+                            changeTimeSpan={this.changeTimeSpan}
                           />}
           />
           <Route
