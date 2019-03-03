@@ -24,12 +24,18 @@ class Chart extends Component {
         <XAxis
           dataKey="start_time"
           tickFormatter={this.formatDateTime}
+          label={{ value: 'Time', position: 'insideBottom' }}
+          height={75}
         />
         <Tooltip
           formatter={this.formatDuration}
           labelFormatter={this.formatDateTime}
         />
-        <YAxis tickFormatter={this.formatDuration}/>
+        <YAxis
+          tickFormatter={this.formatDuration}
+          label={{ value: 'Duration', angle: -90, position: 'insideLeft' }}
+          width={100}
+        />
       </LineChart>
       </div>
     )
