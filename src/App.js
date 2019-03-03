@@ -12,28 +12,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      feedings: [],
-      foods: []
+      feedings: []
     }
   }
   fetchFeedings = async () => {
     const feedings = await axios.get('http://localhost:3000/feedings');
-    const feedingsWithDuration = feedings.data.map(feeding => {
-      const duration = Date.parse(feeding.end_time) - Date.parse(feeding.start_time)
-      return {
-        ...feeding,
-        duration
-      }
-    })
-    this.setState({ feedings: feedingsWithDuration })
-  }
-  fetchFoods = async () => {
-    const foods = await axios.get('http://localhost:3000/foods');
-    this.setState({ foods: foods.data })
+    this.setState({ feedings: feedings.data })
   }
   componentDidMount() {
     this.fetchFeedings()
-    this.fetchFoods()
   }
   render() {
     return (

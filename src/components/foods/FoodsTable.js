@@ -9,6 +9,14 @@ class FoodsTable extends Component {
           <td>{moment(food.time).format("MMM D, YYYY")}</td>
           <td>{moment(food.time).format("h:mmA")}</td>
           <td>{food.food}</td>
+          <td>
+            <button onClick={() => this.props.deleteFood(food.id)}>
+              Delete
+            </button>
+            <button onClick={() => this.props.showEditForm(food)}>
+              Edit
+            </button>
+          </td>
         </tr>
       )
     })
