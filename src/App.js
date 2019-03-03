@@ -35,15 +35,20 @@ class App extends Component {
     }
   }
   fetchFeedings = async () => {
+    // make request to fetch all feedings within the last n hours
     const feedings = await axios.get(`http://localhost:3000/feedings/last_hours/${this.state.timeSpan}`);
+    // set feedings array in state equal to array of feedings returned from db
     this.setState({ feedings: feedings.data })
   }
   changeTimeSpan = (event) => {
+    // change timeSpan in state to equal value from select box
     this.setState({ timeSpan: event.target.value }, () => {
+      // after state has changed, call fetchFeedings again
       this.fetchFeedings()
     })
   }
   handleChange = (event, form) => {
+    // change state of form inputs
     this.setState({
       ...this.state,
       [form]: {
@@ -53,20 +58,28 @@ class App extends Component {
     })
   }
   deleteFeeding = async (id) => {
+    // make request to delete feeding
     await axios.delete(`http://localhost:3000/feedings/${id}`)
+    // call fetchFeedings again
     this.fetchFeedings()
   }
   editFeeding = async () => {
+    // make request to edit feeding
     await axios.put(`http://localhost:3000/feedings/${this.state.editId}`, {
       start_time: `${this.state.editFormData.start_date} ${this.state.editFormData.start_time}`,
       end_time: `${this.state.editFormData.end_date} ${this.state.editFormData.end_time}`,
       side: this.state.editFormData.side
     })
 
+    // clear and hide edit form
     this.hideEditForm();
+
+    // call fetchFeedings agian
     this.fetchFeedings();
   }
   showEditForm = (feeding) => {
+    // set values for edit form inputs
+    // set showEditForm to true
     this.setState({
       ...this.state,
       editFormData: {
@@ -81,6 +94,8 @@ class App extends Component {
     })
   }
   hideEditForm = () => {
+    // clear edit form input values
+    // set showEditForm to false
     this.setState({
       ...this.state,
       editFormData: {
@@ -95,7 +110,9 @@ class App extends Component {
     })
   }
   renderEditForm = () => {
+    // if this.state.showEditForm is true
     if (this.state.showEditForm) {
+      // render feedings edit form
       return (
         <FeedingsEdit
           editFormData={this.state.editFormData}
@@ -107,6 +124,7 @@ class App extends Component {
     }
   }
   componentDidMount() {
+    // call fetchFeedings when component first renders
     this.fetchFeedings()
   }
   render() {
