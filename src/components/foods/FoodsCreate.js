@@ -14,7 +14,7 @@ class FoodsCreate extends Component {
           placeholder="mm/dd/yyyy"
           id="date"
           value={this.props.createFormData.date}
-          onChange={this.props.handleChange}
+          onChange={(event) => this.props.handleChange(event, "createFormData")}
         />
         <label htmlFor="time">Time</label>
         <input
@@ -22,12 +22,11 @@ class FoodsCreate extends Component {
           placeholder="hh:mm:ss"
           id="time"
           value={this.props.createFormData.time}
-          onChange={this.props.handleChange}
+          onChange={(event) => this.props.handleChange(event, "createFormData")}
         />
         <button
           type="button"
           onClick={this.props.setCurrentDateTime}
-          onChange={this.props.handleChange}
         >
           Current Date and Time
         </button>
@@ -36,7 +35,7 @@ class FoodsCreate extends Component {
           type="text"
           id="food"
           value={this.props.createFormData.food}
-          onChange={this.props.handleChange}
+          onChange={(event) => this.props.handleChange(event, "createFormData")}
         />
         <input type="submit" />
       </form>
