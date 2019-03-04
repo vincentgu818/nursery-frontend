@@ -21,8 +21,9 @@ class App extends Component {
         start_time: "",
         end_date: "",
         end_time: "",
-        side: ""
+        side: "L"
       },
+      isNursing: false,
       editFormData: {
         start_date: "",
         start_time: "",
@@ -36,7 +37,7 @@ class App extends Component {
   }
   fetchFeedings = async () => {
     // make request to fetch all feedings within the last n hours
-    const feedings = await axios.get(`http://localhost:3000/feedings/last_hours/${this.state.timeSpan}`);
+    const feedings = await axios.get(`https://nursery-api-stan-lee.herokuapp.com/feedings/last_hours/${this.state.timeSpan}`);
     // set feedings array in state equal to array of feedings returned from db
     this.setState({ feedings: feedings.data })
   }
@@ -57,15 +58,76 @@ class App extends Component {
       }
     })
   }
+
+  handleRadioChange = (event, form) => {
+    // change state of form inputs
+    this.setState({
+      ...this.state,
+      [form]: {
+        ...this.state[form],
+        side: (event.target.id === 'left' ? 'L' : 'R'),
+      }
+    })
+  }
+
+  createFeeding = async () => {
+    // make request to save new feeding to database
+    const newFeeding = await axios.post("https://nursery-api-stan-lee.herokuapp.com/feedings", {
+      start_time: `${this.state.createFormData.start_date} ${this.state.createFormData.start_time}`,
+      end_time: `${this.state.createFormData.end_date} ${this.state.createFormData.end_time}`,
+      side: this.state.createFormData.side,
+    })
+
+    // clear create form inputs
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        createFormData: {
+          start_date: "",
+          start_time: "",
+          end_date: "",
+          end_time: "",
+          side: "L"
+        }
+      }
+    })
+
+    this.fetchFeedings()
+  }
+  setStartDateTimeToNow = () => {
+    // set start date and start time fields in create form to current date and time
+    this.setState({
+      ...this.state,
+      createFormData: {
+        ...this.state.createFormData,
+        start_date: moment().format("YYYY-MM-DD"),
+        start_time: moment().format("HH:mm:ss")
+      },
+      isNursing: true
+    })
+  }
+  setEndDateTimeToNow = () => {
+    // set end date and start time fields in create form to current date and time
+    this.setState({
+      ...this.state,
+      createFormData: {
+        ...this.state.createFormData,
+        end_date: moment().format("YYYY-MM-DD"),
+        end_time: moment().format("HH:mm:ss")
+      },
+      isNursing: false
+    }, () => { this.createFeeding() })
+
+  }
   deleteFeeding = async (id) => {
     // make request to delete feeding
-    await axios.delete(`http://localhost:3000/feedings/${id}`)
+    await axios.delete(`https://nursery-api-stan-lee.herokuapp.com/feedings/${id}`)
     // call fetchFeedings again
     this.fetchFeedings()
   }
   editFeeding = async () => {
     // make request to edit feeding
-    await axios.put(`http://localhost:3000/feedings/${this.state.editId}`, {
+    await axios.put(`https://nursery-api-stan-lee.herokuapp.com/feedings/${this.state.editId}`, {
       start_time: `${this.state.editFormData.start_date} ${this.state.editFormData.start_time}`,
       end_time: `${this.state.editFormData.end_date} ${this.state.editFormData.end_time}`,
       side: this.state.editFormData.side
@@ -74,7 +136,7 @@ class App extends Component {
     // clear and hide edit form
     this.hideEditForm();
 
-    // call fetchFeedings agian
+    // call fetchFeedings again
     this.fetchFeedings();
   }
   showEditForm = (feeding) => {
@@ -142,6 +204,12 @@ class App extends Component {
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
                             changeTimeSpan={this.changeTimeSpan}
+                            handleChange={this.handleChange}
+                            handleRadioChange={this.handleRadioChange}
+                            setStartDateTimeToNow={this.setStartDateTimeToNow}
+                            setEndDateTimeToNow={this.setEndDateTimeToNow}
+                            createFeeding={this.createFeeding}
+                            createFormData={this.state.createFormData}
                           />}
           />
           <Route
@@ -152,6 +220,13 @@ class App extends Component {
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
                             changeTimeSpan={this.changeTimeSpan}
+                            handleChange={this.handleChange}
+                            handleRadioChange={this.handleRadioChange}
+                            setStartDateTimeToNow={this.setStartDateTimeToNow}
+                            setEndDateTimeToNow={this.setEndDateTimeToNow}
+                            isNursing={this.state.isNursing}
+                            createFeeding={this.createFeeding}
+                            createFormData={this.state.createFormData}
                           />}
           />
           <Route
