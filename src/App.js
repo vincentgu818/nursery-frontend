@@ -69,13 +69,16 @@ class App extends Component {
       }
     })
   }
-
+  formatUTC = (value) => {
+    return moment(value).utc().format("YYYY-MM-DD HH:mm:ss")
+  }
   createFeeding = async () => {
+    const { start_date, start_time, end_date, end_time, side } = this.state.createFormData;
     // make request to save new feeding to database
-    const newFeeding = await axios.post("https://nursery-api-stan-lee.herokuapp.com/feedings", {
-      start_time: `${this.state.createFormData.start_date} ${this.state.createFormData.start_time}`,
-      end_time: `${this.state.createFormData.end_date} ${this.state.createFormData.end_time}`,
-      side: this.state.createFormData.side,
+    await axios.post("https://nursery-api-stan-lee.herokuapp.com/feedings", {
+      start_time: this.formatUTC(`${start_date} ${start_time}`),
+      end_time: this.formatUTC(`${end_date} ${end_time}`),
+      side: side
     })
 
     // clear create form inputs
@@ -116,8 +119,8 @@ class App extends Component {
         end_time: moment().format("HH:mm:ss")
       },
       isNursing: false
-    }, () => { this.createFeeding() })
-
+    })
+    // () => { this.createFeeding() }
   }
   deleteFeeding = async (id) => {
     // make request to delete feeding
@@ -126,11 +129,12 @@ class App extends Component {
     this.fetchFeedings()
   }
   editFeeding = async () => {
+    const { start_date, start_time, end_date, end_time, side } = this.state.editFormData;
     // make request to edit feeding
     await axios.put(`https://nursery-api-stan-lee.herokuapp.com/feedings/${this.state.editId}`, {
-      start_time: `${this.state.editFormData.start_date} ${this.state.editFormData.start_time}`,
-      end_time: `${this.state.editFormData.end_date} ${this.state.editFormData.end_time}`,
-      side: this.state.editFormData.side
+      start_time: this.formatUTC(`${start_date} ${start_time}`),
+      end_time: this.formatUTC(`${end_date} ${end_time}`),
+      side: side
     })
 
     // clear and hide edit form
