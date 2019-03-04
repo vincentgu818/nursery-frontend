@@ -37,8 +37,8 @@ class Foods extends Component {
       ...this.state,
       createFormData: {
         ...this.state.createFormData,
-        date: moment().format("YYYY-MM-DD"),
-        time: moment().format("HH:mm:ss")
+        date: moment().utc().format("YYYY-MM-DD"),
+        time: moment().utc().format("HH:mm:ss")
       }
     })
   }
