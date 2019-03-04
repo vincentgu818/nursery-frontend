@@ -2,21 +2,19 @@ import React, { Component } from "react";
 
 import FeedingsTable from "./FeedingsTable"
 import FeedingsCreate from "./FeedingsCreate"
+import FeedingsInterval from "./FeedingsInterval"
 
 class Feedings extends Component {
   render() {
     return (
       <div>
         Feedings
-        <select defaultValue="24" onChange={this.props.changeTimeSpan}>
-          <option value="24">Last 24 hours</option>
-          <option value="48">Last 48 hours</option>
-          <option value="72">Last 72 hours</option>
-          <option value="168">Last 7 days</option>
-          <option value="336">Last 14 days</option>
-          <option value="720">Last 30 days</option>
-          <option value="2160">Last 90 days</option>
-        </select>
+        <FeedingsInterval
+          handleChange={this.props.handleChange}
+          changeTimeSpan={this.props.changeTimeSpan}
+          setInterval={this.props.setInterval}
+          intervalFormData={this.props.intervalFormData}
+        />
         <FeedingsCreate
           handleChange={this.props.handleChange}
           handleRadioChange={this.props.handleRadioChange}

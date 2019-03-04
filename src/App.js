@@ -15,7 +15,15 @@ class App extends Component {
     super(props);
     this.state = {
       feedings: [],
-      timeSpan: 168,
+      timeSpan: 24,
+      interval_start: "",
+      interval_end: "",
+      intervalFormData: {
+        start_date: "",
+        start_time: "",
+        end_date: "",
+        end_time: "",
+      },
       createFormData: {
         start_date: "",
         start_time: "",
@@ -36,14 +44,40 @@ class App extends Component {
     }
   }
   fetchFeedings = async () => {
-    // make request to fetch all feedings within the last n hours
-    const feedings = await axios.get(`https://nursery-api-stan-lee.herokuapp.com/feedings/last_hours/${this.state.timeSpan}`);
+    let feedings
+    // make request to fetch all feedings according to the mode and interval specified
+    if (this.state.interval_start !== "" && this.state.interval_end !== "") {
+      feedings = await axios.get(`https://nursery-api-stan-lee.herokuapp.com/feedings/${this.state.interval_start}/${this.state.interval_end}`)
+    } else {
+      feedings = await axios.get(`https://nursery-api-stan-lee.herokuapp.com/feedings/last_hours/${this.state.timeSpan}`)
+    }
     // set feedings array in state equal to array of feedings returned from db
     this.setState({ feedings: feedings.data })
   }
+  setInterval = (event) => {
+    event.preventDefault()
+
+    const { start_date, start_time, end_date, end_time } = this.state.intervalFormData;
+    this.setState({
+      interval_start: `${start_date.split('-').join('')}${start_time.split(':').join('')}`,
+      interval_end: `${end_date.split('-').join('')}${end_time.split(':').join('')}`,
+      timeSpan: 0,
+      intervalFormData: {
+        start_date: "",
+        start_time: "",
+        end_date: "",
+        end_time: ""
+      }
+    }, () => { this.fetchFeedings() })
+
+  }
   changeTimeSpan = (event) => {
     // change timeSpan in state to equal value from select box
-    this.setState({ timeSpan: event.target.value }, () => {
+    this.setState({
+      timeSpan: event.target.value,
+      interval_start: "",
+      interval_end: ""
+    }, () => {
       // after state has changed, call fetchFeedings again
       this.fetchFeedings()
     })
@@ -207,6 +241,8 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
+                            setInterval={this.setInterval}
+                            intervalFormData={this.state.intervalFormData}
                             changeTimeSpan={this.changeTimeSpan}
                             handleChange={this.handleChange}
                             handleRadioChange={this.handleRadioChange}
@@ -223,6 +259,8 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
+                            setInterval={this.setInterval}
+                            intervalFormData={this.state.intervalFormData}
                             changeTimeSpan={this.changeTimeSpan}
                             handleChange={this.handleChange}
                             handleRadioChange={this.handleRadioChange}
