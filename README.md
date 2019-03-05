@@ -55,6 +55,6 @@ To view only the feedings within a certain time span, click the "Set Time Span" 
 ## Technologies Used
 
   1. Used [React](https://reactjs.org/) for the front end.
-  2. Used [MongoDB](https://www.postgresql.org) to store data for feedings and foods.
+  2. Used [PostgreSQL](https://www.postgresql.org) to store data for feedings and foods.
   3. Used [Ruby](https://www.ruby-lang.org/en/) on [Rails](https://rubyonrails.org/) for the back end API.
   4. Used [Font Awesome](https://fontawesome.com/) for icons.
