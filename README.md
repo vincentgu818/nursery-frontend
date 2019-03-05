@@ -4,7 +4,8 @@ Using Nuresry, mothers can log the foods they eat, the times they breast feed, a
 
 ## Getting Started
 
-Link to live site: https://nursery-frontend-stan-lee.herokuapp.com/
+Link to live site: https://nursery-frontend-stan-lee.herokuapp.com/<br>
+Link to back end GitHub repository: https://github.com/vincentgu818/nursery-api
 
 ### Instructions
 
