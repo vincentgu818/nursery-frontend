@@ -25,19 +25,17 @@ class FeedingsTable extends Component {
           <td>{this.formatDuration(feeding.duration)}</td>
           <td>{feeding.side}</td>
           <td>{feeding.foods.join(', ')}</td>
-          <td>
-            <button
-              onClick={() => this.props.deleteFeeding(feeding.id)}
-            >
-              Delete
-            </button>
-          </td>
-          <td>
-            <button
-              onClick={() => this.props.showEditForm(feeding)}
-            >
-              Edit
-            </button>
+          <td className="btn-cell">
+            <span className="btn-group">
+              <i
+                className="far fa-trash-alt"
+                onClick={() => this.props.deleteFeeding(feeding.id)}
+              ></i>
+              <i
+                className="fas fa-edit"
+                onClick={() => this.props.showEditForm(feeding)}
+              ></i>
+            </span>
           </td>
         </tr>
       )
@@ -45,20 +43,22 @@ class FeedingsTable extends Component {
   }
   render() {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Duration</th>
-            <th>Side</th>
-            <th>Foods</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.renderRows()}
-        </tbody>
-      </table>
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Duration</th>
+              <th>Side</th>
+              <th>Foods</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.renderRows()}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

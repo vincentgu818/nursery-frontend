@@ -9,50 +9,62 @@ class FeedingsEdit extends Component {
   }
   render() {
     return (
-      <div>
-        <div>
+      <div className="modal-wrapper">
+        <div className="modal">
           <form onSubmit={this.handleSubmit}>
-            <label htmlFor="start_date">Start Date</label>
-            <input
-              type="date"
-              placeholder="mm/dd/yyyy"
-              id="start_date"
-              value={this.props.editFormData.start_date}
-              onChange={(event) => this.props.handleChange(event, "editFormData")}
-            />
-            <label htmlFor="start_time">Start Time</label>
-            <input
-              type="text"
-              placeholder="hh:mm:ss"
-              id="start_time"
-              value={this.props.editFormData.start_time}
-              onChange={(event) => this.props.handleChange(event, "editFormData")}
-            />
-            <label htmlFor="end_date">End Date</label>
-            <input
-              type="date"
-              placeholder="mm/dd/yyyy"
-              id="end_date"
-              value={this.props.editFormData.end_date}
-              onChange={(event) => this.props.handleChange(event, "editFormData")}
-            />
-            <label htmlFor="end_time">End Time</label>
-            <input
-              type="text"
-              placeholder="hh:mm:ss"
-              id="end_time"
-              value={this.props.editFormData.end_time}
-              onChange={(event) => this.props.handleChange(event, "editFormData")}
-            />
-            <label htmlFor="side">Side</label>
-            <input
-              type="text"
-              id="side"
-              value={this.props.editFormData.side}
-              onChange={(event) => this.props.handleChange(event, "editFormData")}
-            />
-            <button type="button" onClick={this.props.hideEditForm}>Cancel</button>
-            <input type="submit" />
+            <div className="form-container">
+              <label htmlFor="start_date">Start</label>
+              <div className="form-group">
+                <input
+                  type="date"
+                  placeholder="mm/dd/yyyy"
+                  id="start_date"
+                  value={this.props.editFormData.start_date}
+                  onChange={(event) => this.props.handleChange(event, "editFormData")}
+                />
+                <input
+                  type="text"
+                  placeholder="hh:mm:ss"
+                  id="start_time"
+                  value={this.props.editFormData.start_time}
+                  onChange={(event) => this.props.handleChange(event, "editFormData")}
+                />
+              </div>
+              <label htmlFor="end_date">End</label>
+              <div className="form-group">
+                <input
+                  type="date"
+                  placeholder="mm/dd/yyyy"
+                  id="end_date"
+                  value={this.props.editFormData.end_date}
+                  onChange={(event) => this.props.handleChange(event, "editFormData")}
+                />
+                <input
+                  type="text"
+                  placeholder="hh:mm:ss"
+                  id="end_time"
+                  value={this.props.editFormData.end_time}
+                  onChange={(event) => this.props.handleChange(event, "editFormData")}
+                />
+              </div>
+              <label htmlFor="side">Side</label>
+              <div className="form-group">
+                <input
+                  type="text"
+                  id="side"
+                  value={this.props.editFormData.side}
+                  onChange={(event) => this.props.handleChange(event, "editFormData")}
+                />
+              </div>
+              <div className="form-btn-group">
+                <button
+                  type="button"
+                  onClick={this.props.hideEditForm}
+                  className="cancel-btn"
+                >Cancel</button>
+                <input type="submit" className="edit-submit" />
+              </div>
+            </div>
           </form>
         </div>
       </div>

@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 
+
 import FeedingsTable from "./FeedingsTable"
 import FeedingsCreate from "./FeedingsCreate"
-import FeedingsInterval from "./FeedingsInterval"
 
 class Feedings extends Component {
   render() {
     return (
       <div>
-        Feedings
-        <FeedingsInterval
-          handleChange={this.props.handleChange}
-          changeTimeSpan={this.props.changeTimeSpan}
-          setInterval={this.props.setInterval}
-          intervalFormData={this.props.intervalFormData}
-        />
         <FeedingsCreate
           handleChange={this.props.handleChange}
           handleRadioChange={this.props.handleRadioChange}
@@ -35,4 +28,4 @@ class Feedings extends Component {
   }
 }
 
-export default Feedings
+export default Feedings;
