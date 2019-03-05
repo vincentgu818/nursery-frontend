@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Nursery (Front End)
 
-## Available Scripts
+Using Nuresry, mothers can log the foods they eat, the times they breast feed, and trace their eating habits to possible reactions from the child.
 
-In the project directory, you can run:
+## Getting Started
 
-### `npm start`
+Link to live site: https://nursery-frontend-stan-lee.herokuapp.com/
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Instructions
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+#### Feedings
 
-### `npm test`
+<kbd>
+<img src="public/images/screenshots/feedings.png" width="600" />
+</kbd>
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##### Log a New Feeding
 
-### `npm run build`
+To log a new feeding, click the "Start Nursing" button just below the tab navigation bar. This will automatically set the time that you began nursing. When you are done nursing, press the "Stop Nursing" button. This will automatically set the time that you stopped nursing. Then choose which side you nursed from and click submit. Your breastfeeding session is now logged.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##### Edit a Feeding
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Click the edit button to the right of each logged feeding to open a modal containing a form to edit the feeding. Here, you can change the start time or the end time of the feeding, or which side was used. Click submit to save your changes.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##### Delete a Feeding
 
-### `npm run eject`
+Click the delete button to the right of each logged feeding to delete the feeding from the database.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Foods
+<kbd>
+<img src="public/images/screenshots/foods.png" width="600" />
+</kbd>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+##### Log a New Food
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To log a new food, click the "Current Date and Time" button to set the current date and time as the time that you ate the food, or manually enter the time the food was eaten. Then type the name of the food and click submit. Your food is now logged.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+##### Edit a Food
 
-## Learn More
+Click the edit button to the right of each logged food to open a modal containing a form to edit the feeding. Here, you can change the time the food was eaten and the name of the food. Click submit to save your changes.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+##### Delete a Food
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Click the delete button to the right of each logged food to delete the food from the database.
 
-### Code Splitting
+#### Time Span
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+<kbd>
+<img src="public/images/screenshots/timespan.png" width="600" />
+</kbd>
 
-### Analyzing the Bundle Size
+To view only the feedings within a certain time span, click the "Set Time Span" button just below the graph. Here you can set a time span in-between two specific dates. After clicking submit, the list of feedings will all be within that time span. You may also select a time interval for the select box to the right of the "Set Time Span" button to view feedings from the time you chose until now.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+## Technologies Used
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  1. Used [React](https://reactjs.org/) for the front end.
+  2. Used [MongoDB](https://www.postgresql.org) to store data for feedings and foods.
+  3. Used [Ruby](https://www.ruby-lang.org/en/) on [Rails](https://rubyonrails.org/) for the back end API.
+  4. Used [Font Awesome](https://fontawesome.com/) for icons.

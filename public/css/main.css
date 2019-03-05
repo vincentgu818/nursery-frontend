@@ -201,6 +201,7 @@ form {
 
 .form-row {
   display: flex;
+  flex-direction: column;
 }
 
 .form-row > input {
@@ -281,9 +282,6 @@ tr:nth-of-type(even) {
 
 
 @media (max-width: 768px) {
-    .form-row {
-      flex-direction: column;
-    }
     h1 {
       margin: 24px 0;
     }
