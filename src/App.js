@@ -8,7 +8,8 @@ import Chart from "./components/chart/Chart";
 import TabNavigation from "./components/TabNavigation";
 import Feedings from "./components/feedings/Feedings";
 import Foods from "./components/foods/Foods";
-import FeedingsEdit from "./components/feedings/FeedingsEdit"
+import FeedingsEdit from "./components/feedings/FeedingsEdit";
+import FeedingsInterval from "./components/feedings/FeedingsInterval";
 
 class App extends Component {
   constructor(props) {
@@ -58,9 +59,11 @@ class App extends Component {
     event.preventDefault()
 
     const { start_date, start_time, end_date, end_time } = this.state.intervalFormData;
+    const startUTC = moment(`${start_date} ${start_time}`).utc().format("YYYYMMDDHHmmss");
+    const endUTC = moment(`${end_date} ${end_time}`).utc().format("YYYYMMDDHHmmss");
     this.setState({
-      interval_start: `${start_date.split('-').join('')}${start_time.split(':').join('')}`,
-      interval_end: `${end_date.split('-').join('')}${end_time.split(':').join('')}`,
+      interval_start: startUTC,
+      interval_end: endUTC,
       timeSpan: 0,
       intervalFormData: {
         start_date: "",
@@ -230,9 +233,15 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="container">
           <h1>Nursery</h1>
           <Chart feedings={this.state.feedings}/>
+          <FeedingsInterval
+            handleChange={this.handleChange}
+            changeTimeSpan={this.changeTimeSpan}
+            setInterval={this.setInterval}
+            intervalFormData={this.state.intervalFormData}
+          />
           <TabNavigation />
           <Route
             exact path="/"
@@ -241,9 +250,6 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
-                            setInterval={this.setInterval}
-                            intervalFormData={this.state.intervalFormData}
-                            changeTimeSpan={this.changeTimeSpan}
                             handleChange={this.handleChange}
                             handleRadioChange={this.handleRadioChange}
                             setStartDateTimeToNow={this.setStartDateTimeToNow}
@@ -259,9 +265,6 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
-                            setInterval={this.setInterval}
-                            intervalFormData={this.state.intervalFormData}
-                            changeTimeSpan={this.changeTimeSpan}
                             handleChange={this.handleChange}
                             handleRadioChange={this.handleRadioChange}
                             setStartDateTimeToNow={this.setStartDateTimeToNow}

@@ -145,7 +145,6 @@ class Foods extends Component {
   render() {
     return (
       <div>
-        Foods
         <FoodsCreate
           setCurrentDateTime={this.setCurrentDateTime}
           handleChange={this.handleChange}
