@@ -8,14 +8,23 @@ import Chart from "./components/chart/Chart";
 import TabNavigation from "./components/TabNavigation";
 import Feedings from "./components/feedings/Feedings";
 import Foods from "./components/foods/Foods";
-import FeedingsEdit from "./components/feedings/FeedingsEdit"
+import FeedingsEdit from "./components/feedings/FeedingsEdit";
+import FeedingsInterval from "./components/feedings/FeedingsInterval";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       feedings: [],
-      timeSpan: 168,
+      timeSpan: 24,
+      interval_start: "",
+      interval_end: "",
+      intervalFormData: {
+        start_date: "",
+        start_time: "",
+        end_date: "",
+        end_time: "",
+      },
       createFormData: {
         start_date: "",
         start_time: "",
@@ -36,14 +45,42 @@ class App extends Component {
     }
   }
   fetchFeedings = async () => {
-    // make request to fetch all feedings within the last n hours
-    const feedings = await axios.get(`https://nursery-api-stan-lee.herokuapp.com/feedings/last_hours/${this.state.timeSpan}`);
+    let feedings
+    // make request to fetch all feedings according to the mode and interval specified
+    if (this.state.interval_start !== "" && this.state.interval_end !== "") {
+      feedings = await axios.get(`https://nursery-api-stan-lee.herokuapp.com/feedings/${this.state.interval_start}/${this.state.interval_end}`)
+    } else {
+      feedings = await axios.get(`https://nursery-api-stan-lee.herokuapp.com/feedings/last_hours/${this.state.timeSpan}`)
+    }
     // set feedings array in state equal to array of feedings returned from db
     this.setState({ feedings: feedings.data })
   }
+  setInterval = (event) => {
+    event.preventDefault()
+
+    const { start_date, start_time, end_date, end_time } = this.state.intervalFormData;
+    const startUTC = moment(`${start_date} ${start_time}`).utc().format("YYYYMMDDHHmmss");
+    const endUTC = moment(`${end_date} ${end_time}`).utc().format("YYYYMMDDHHmmss");
+    this.setState({
+      interval_start: startUTC,
+      interval_end: endUTC,
+      timeSpan: 0,
+      intervalFormData: {
+        start_date: "",
+        start_time: "",
+        end_date: "",
+        end_time: ""
+      }
+    }, () => { this.fetchFeedings() })
+
+  }
   changeTimeSpan = (event) => {
     // change timeSpan in state to equal value from select box
-    this.setState({ timeSpan: event.target.value }, () => {
+    this.setState({
+      timeSpan: event.target.value,
+      interval_start: "",
+      interval_end: ""
+    }, () => {
       // after state has changed, call fetchFeedings again
       this.fetchFeedings()
     })
@@ -69,13 +106,16 @@ class App extends Component {
       }
     })
   }
-
+  formatUTC = (value) => {
+    return moment(value).utc().format("YYYY-MM-DD HH:mm:ss")
+  }
   createFeeding = async () => {
+    const { start_date, start_time, end_date, end_time, side } = this.state.createFormData;
     // make request to save new feeding to database
-    const newFeeding = await axios.post("https://nursery-api-stan-lee.herokuapp.com/feedings", {
-      start_time: `${this.state.createFormData.start_date} ${this.state.createFormData.start_time}`,
-      end_time: `${this.state.createFormData.end_date} ${this.state.createFormData.end_time}`,
-      side: this.state.createFormData.side,
+    await axios.post("https://nursery-api-stan-lee.herokuapp.com/feedings", {
+      start_time: this.formatUTC(`${start_date} ${start_time}`),
+      end_time: this.formatUTC(`${end_date} ${end_time}`),
+      side: side
     })
 
     // clear create form inputs
@@ -116,8 +156,8 @@ class App extends Component {
         end_time: moment().format("HH:mm:ss")
       },
       isNursing: false
-    }, () => { this.createFeeding() })
-
+    })
+    // () => { this.createFeeding() }
   }
   deleteFeeding = async (id) => {
     // make request to delete feeding
@@ -126,11 +166,12 @@ class App extends Component {
     this.fetchFeedings()
   }
   editFeeding = async () => {
+    const { start_date, start_time, end_date, end_time, side } = this.state.editFormData;
     // make request to edit feeding
     await axios.put(`https://nursery-api-stan-lee.herokuapp.com/feedings/${this.state.editId}`, {
-      start_time: `${this.state.editFormData.start_date} ${this.state.editFormData.start_time}`,
-      end_time: `${this.state.editFormData.end_date} ${this.state.editFormData.end_time}`,
-      side: this.state.editFormData.side
+      start_time: this.formatUTC(`${start_date} ${start_time}`),
+      end_time: this.formatUTC(`${end_date} ${end_time}`),
+      side: side
     })
 
     // clear and hide edit form
@@ -192,9 +233,15 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="container">
           <h1>Nursery</h1>
           <Chart feedings={this.state.feedings}/>
+          <FeedingsInterval
+            handleChange={this.handleChange}
+            changeTimeSpan={this.changeTimeSpan}
+            setInterval={this.setInterval}
+            intervalFormData={this.state.intervalFormData}
+          />
           <TabNavigation />
           <Route
             exact path="/"
@@ -203,7 +250,6 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
-                            changeTimeSpan={this.changeTimeSpan}
                             handleChange={this.handleChange}
                             handleRadioChange={this.handleRadioChange}
                             setStartDateTimeToNow={this.setStartDateTimeToNow}
@@ -219,7 +265,6 @@ class App extends Component {
                             deleteFeeding={this.deleteFeeding}
                             showEditForm={this.showEditForm}
                             renderEditForm={this.renderEditForm}
-                            changeTimeSpan={this.changeTimeSpan}
                             handleChange={this.handleChange}
                             handleRadioChange={this.handleRadioChange}
                             setStartDateTimeToNow={this.setStartDateTimeToNow}

@@ -31,14 +31,17 @@ class Foods extends Component {
     // set state foods array to array of foods returned from fetch
     this.setState({ foods: foods.data })
   }
+  formatUTC = (value) => {
+    return moment(value).utc().format("YYYY-MM-DD HH:mm:ss")
+  }
   setCurrentDateTime = () => {
     // set date and time fields in create form to equal current date and time
     this.setState({
       ...this.state,
       createFormData: {
         ...this.state.createFormData,
-        date: moment().utc().format("YYYY-MM-DD"),
-        time: moment().utc().format("HH:mm:ss")
+        date: moment().format("YYYY-MM-DD"),
+        time: moment().format("HH:mm:ss")
       }
     })
   }
@@ -53,10 +56,11 @@ class Foods extends Component {
     })
   }
   createFood = async () => {
+    const { date, time, food } = this.state.createFormData;
     // make request to save new food to database
     const newFood = await axios.post("https://nursery-api-stan-lee.herokuapp.com/foods", {
-      time: `${this.state.createFormData.date} ${this.state.createFormData.time}`,
-      food: this.state.createFormData.food
+      time: this.formatUTC(`${date} ${time}`),
+      food: food
     })
 
     // clear create form inputs
@@ -79,10 +83,11 @@ class Foods extends Component {
     this.fetchFoods()
   }
   editFood = async () => {
+    const { date, time, food } = this.state.editFormData;
     // make request to update food item
     await axios.put(`https://nursery-api-stan-lee.herokuapp.com/foods/${this.state.editId}`, {
-      time: `${this.state.editFormData.date} ${this.state.editFormData.time}`,
-      food: this.state.editFormData.food
+      time: this.formatUTC(`${date} ${time}`),
+      food: food
     })
 
     // clear and hide edit form
@@ -140,7 +145,6 @@ class Foods extends Component {
   render() {
     return (
       <div>
-        Foods
         <FoodsCreate
           setCurrentDateTime={this.setCurrentDateTime}
           handleChange={this.handleChange}

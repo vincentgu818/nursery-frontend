@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import moment from "moment";
 
 class Chart extends Component {
@@ -22,27 +22,34 @@ class Chart extends Component {
     }
   }
   render() {
+    const data = [...this.props.feedings];
     return (
       <div>
-      <LineChart width={600} height={300} data={this.props.feedings}>
-        <Line type="monotone" dataKey="duration" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc" />
-        <XAxis
-          dataKey="start_time"
-          tickFormatter={this.formatDateTime}
-          label={{ value: 'Time', position: 'insideBottom' }}
-          height={75}
-        />
-        <Tooltip
-          formatter={this.formatDuration}
-          labelFormatter={this.formatDateTime}
-        />
-        <YAxis
-          tickFormatter={this.formatDuration}
-          label={{ value: 'Duration', angle: -90, position: 'insideLeft' }}
-          width={100}
-        />
-      </LineChart>
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart  data={data.reverse()}>
+          <Line type="monotone" dataKey="duration" stroke="#8884d8" />
+          <CartesianGrid stroke="#ccc" />
+          <XAxis
+            dataKey="start_time"
+            tickFormatter={this.formatDateTime}
+            // label={{ value: 'Time', position: 'insideBottom' }}
+            // height={75}
+            // style={{ display: 'none' }}
+            dy={15}
+          />
+          <Tooltip
+            formatter={this.formatDuration}
+            labelFormatter={this.formatDateTime}
+          />
+          <YAxis
+            tickFormatter={this.formatDuration}
+            // label={{ value: 'Duration', angle: -90, position: 'insideLeft' }}
+            style={{ display: 'none' }}
+            width={0}
+            dx={-5}
+          />
+        </LineChart>
+      </ResponsiveContainer>
       </div>
     )
   }
