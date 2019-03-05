@@ -11,6 +11,13 @@ class FoodsCreate extends Component {
     return (
       <form onSubmit={this.handleSubmit} className="create-form">
         <div className="form-container">
+          <button
+            type="button"
+            className="date-time-btn"
+            onClick={this.props.setCurrentDateTime}
+          >
+            Current Date and Time
+          </button>
           <label htmlFor="date">Date</label>
           <div className="form-group">
             <input
@@ -32,13 +39,6 @@ class FoodsCreate extends Component {
               onChange={(event) => this.props.handleChange(event, "createFormData")}
             />
           </div>
-          <button
-            type="button"
-            className="date-time-btn"
-            onClick={this.props.setCurrentDateTime}
-          >
-            Current Date and Time
-          </button>
           <label htmlFor="food">Food</label>
           <div className="form-group">
             <input
