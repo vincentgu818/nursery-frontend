@@ -254,6 +254,7 @@ class App extends Component {
                             handleRadioChange={this.handleRadioChange}
                             setStartDateTimeToNow={this.setStartDateTimeToNow}
                             setEndDateTimeToNow={this.setEndDateTimeToNow}
+                            isNursing={this.state.isNursing}
                             createFeeding={this.createFeeding}
                             createFormData={this.state.createFormData}
                           />}
